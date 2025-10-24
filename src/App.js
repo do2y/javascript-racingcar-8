@@ -18,13 +18,7 @@ class App {
   }
 
   validateDelimiter(input) {
-    if (
-      input.includes('/') ||
-      input.includes(':') ||
-      input.includes(';') ||
-      input.includes(' ') ||
-      input.includes('|')
-    ) {
+    if (/[^가-힣a-zA-Z0-9,]/.test(input)) {
       throw new Error('[ERROR] 구분자는 쉼표(,)만 사용할 수 있습니다.');
     }
 
