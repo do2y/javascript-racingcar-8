@@ -6,7 +6,9 @@ class App {
     this.validateDelimiter(carNamesInput);
     const carNames = this.parseCarNames(carNamesInput);
     this.validateCarNames(carNames);
-    console.log(carNames);
+
+    const roundCount = await this.getRoundCount();
+    this.validateRoundCount(roundCount);
   }
 
   async getCarNames() {
@@ -45,6 +47,23 @@ class App {
         throw new Error('[ERROR] 자동차 이름은 5자 이하만 가능합니다.');
       }
     });
+  }
+
+  async getRoundCount() {
+    const input = await Console.readLineAsync('시도할 횟수는 몇 회인가요?\n');
+    return input.trim();
+  }
+
+  validateRoundCount(input) {
+    if (input === '') {
+      throw new Error('[ERROR] 시도 횟수가 입력되지 않았습니다.');
+    }
+
+    if (!/^\d+$/.test(input)) {
+      throw new Error('[ERROR] 시도 횟수는 0 이상의 정수만 가능합니다.');
+    }
+
+    return Number(input);
   }
 }
 
