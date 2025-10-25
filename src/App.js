@@ -5,6 +5,7 @@ class App {
     const carNamesInput = await this.getCarNames();
     this.validateDelimiter(carNamesInput);
     const carNames = this.parseCarNames(carNamesInput);
+
     this.validateCarNames(carNames);
 
     const roundCount = await this.getRoundCount();
@@ -20,7 +21,7 @@ class App {
   }
 
   validateDelimiter(input) {
-    if (/[^가-힣a-zA-Z0-9,]/.test(input)) {
+    if (/[^가-힣a-zA-Z0-9,\s]/.test(input)) {
       throw new Error('[ERROR] 구분자는 쉼표(,)만 사용할 수 있습니다.');
     }
 
