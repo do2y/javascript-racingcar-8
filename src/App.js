@@ -11,7 +11,8 @@ class App {
     const validatedCount = this.validateRoundCount(roundCount);
 
     Console.print('\n실행 결과');
-    this.playGame(carNames, validatedCount);
+    const carPositions = this.playGame(carNames, validatedCount);
+    this.printWinners(carNames, carPositions);
   }
 
   async getCarNames() {
@@ -80,6 +81,8 @@ class App {
 
       Console.print('');
     }
+
+    return carPositions;
   }
 
   moveCar(carPositions, index) {
@@ -87,6 +90,15 @@ class App {
     if (randomValue >= 4) {
       carPositions[index] += '-';
     }
+  }
+
+  printWinners(carNames, carPositions) {
+    const maxDistance = Math.max(...carPositions.map((pos) => pos.length));
+    const winners = carNames.filter(
+      (_, index) => carPositions[index].length === maxDistance,
+    );
+
+    Console.print(`최종 우승자 : ${winners.join(', ')}`);
   }
 }
 
