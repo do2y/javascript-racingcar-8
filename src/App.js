@@ -74,15 +74,18 @@ class App {
 
     for (let i = 0; i < roundCount; i++) {
       carNames.forEach((name, index) => {
-        const randomValue = Random.pickNumberInRange(0, 9);
-        if (randomValue >= 4) {
-          carPositions[index] += '-';
-        }
-
+        this.moveCar(carPositions, index);
         Console.print(`${name} : ${carPositions[index]}`);
       });
 
       Console.print('');
+    }
+  }
+
+  moveCar(carPositions, index) {
+    const randomValue = Random.pickNumberInRange(0, 9);
+    if (randomValue >= 4) {
+      carPositions[index] += '-';
     }
   }
 }
