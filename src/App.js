@@ -1,15 +1,17 @@
-import { Console } from '@woowacourse/mission-utils';
+import { Console, Random } from '@woowacourse/mission-utils';
 
 class App {
   async run() {
     const carNamesInput = await this.getCarNames();
     this.validateDelimiter(carNamesInput);
     const carNames = this.parseCarNames(carNamesInput);
-
     this.validateCarNames(carNames);
 
     const roundCount = await this.getRoundCount();
-    this.validateRoundCount(roundCount);
+    const validatedCount = this.validateRoundCount(roundCount);
+
+    Console.print('\n실행 결과');
+    this.playGame(carNames, validatedCount);
   }
 
   async getCarNames() {
@@ -65,6 +67,23 @@ class App {
     }
 
     return Number(input);
+  }
+
+  playGame(carNames, roundCount) {
+    const carPositions = new Array(carNames.length).fill('');
+
+    for (let i = 0; i < roundCount; i++) {
+      carNames.forEach((name, index) => {
+        const randomValue = Random.pickNumberInRange(0, 9);
+        if (randomValue >= 4) {
+          carPositions[index] += '-';
+        }
+
+        Console.print(`${name} : ${carPositions[index]}`);
+      });
+
+      Console.print('');
+    }
   }
 }
 
