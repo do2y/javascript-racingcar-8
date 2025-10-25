@@ -1,4 +1,5 @@
 import { Console, Random } from '@woowacourse/mission-utils';
+import { ERROR_MESSAGES } from './error.js';
 
 const MIN_RANDOM = 0;
 const MAX_RANDOM = 9;
@@ -30,11 +31,11 @@ class App {
 
   validateDelimiter(input) {
     if (/[^가-힣a-zA-Z0-9,\s]/.test(input)) {
-      throw new Error('[ERROR] 구분자는 쉼표(,)만 사용할 수 있습니다.');
+      throw new Error(ERROR_MESSAGES.INVALID_DELIMITER);
     }
 
     if (input.startsWith(',') || input.endsWith(',')) {
-      throw new Error('[ERROR] 쉼표(,)는 이름의 앞뒤에 올 수 없습니다.');
+      throw new Error(ERROR_MESSAGES.INVALID_COMMA_POSITION);
     }
   }
 
@@ -44,16 +45,16 @@ class App {
 
   validateCarNames(carNames) {
     if (carNames.length === 0) {
-      throw new Error('[ERROR] 자동차 이름이 입력되지 않았습니다.');
+      throw new Error(ERROR_MESSAGES.NO_CAR_NAME);
     }
 
     carNames.forEach((name) => {
       if (name === '') {
-        throw new Error('[ERROR] 빈 이름은 입력할 수 없습니다.');
+        throw new Error(ERROR_MESSAGES.EMPTY_CAR_NAME);
       }
 
       if (name.length > MAX_NAME_LENGTH) {
-        throw new Error('[ERROR] 자동차 이름은 5자 이하만 가능합니다.');
+        throw new Error(ERROR_MESSAGES.CAR_NAME_TOO_LONG);
       }
     });
   }
@@ -65,11 +66,11 @@ class App {
 
   validateRoundCount(input) {
     if (input === '') {
-      throw new Error('[ERROR] 시도 횟수가 입력되지 않았습니다.');
+      throw new Error(ERROR_MESSAGES.EMPTY_ROUND_COUNT);
     }
 
     if (!/^\d+$/.test(input)) {
-      throw new Error('[ERROR] 시도 횟수는 0 이상의 정수만 가능합니다.');
+      throw new Error(ERROR_MESSAGES.INVALID_ROUND_COUNT);
     }
 
     return Number(input);
