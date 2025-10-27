@@ -1,5 +1,6 @@
 import { Console, Random } from '@woowacourse/mission-utils';
 import { ERROR_MESSAGES } from './error.js';
+import { parseCarNames } from './utils/parser.js';
 
 const MIN_RANDOM = 0;
 const MAX_RANDOM = 9;
@@ -37,10 +38,6 @@ class App {
     if (input.startsWith(',') || input.endsWith(',')) {
       throw new Error(ERROR_MESSAGES.INVALID_COMMA_POSITION);
     }
-  }
-
-  parseCarNames(input) {
-    return input.split(',').map((name) => name.trim());
   }
 
   validateCarNames(carNames) {
