@@ -30,32 +30,6 @@ class App {
     return input.trim();
   }
 
-  validateDelimiter(input) {
-    if (/[^가-힣a-zA-Z0-9,\s]/.test(input)) {
-      throw new Error(ERROR_MESSAGES.INVALID_DELIMITER);
-    }
-
-    if (input.startsWith(',') || input.endsWith(',')) {
-      throw new Error(ERROR_MESSAGES.INVALID_COMMA_POSITION);
-    }
-  }
-
-  validateCarNames(carNames) {
-    if (carNames.length === 0) {
-      throw new Error(ERROR_MESSAGES.NO_CAR_NAME);
-    }
-
-    carNames.forEach((name) => {
-      if (name === '') {
-        throw new Error(ERROR_MESSAGES.EMPTY_CAR_NAME);
-      }
-
-      if (name.length > MAX_NAME_LENGTH) {
-        throw new Error(ERROR_MESSAGES.CAR_NAME_TOO_LONG);
-      }
-    });
-  }
-
   async getRoundCount() {
     const input = await Console.readLineAsync('시도할 횟수는 몇 회인가요?\n');
     return input.trim();
