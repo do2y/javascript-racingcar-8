@@ -8,6 +8,7 @@ class App {
   async run() {
     try {
       const carNamesInput = await this.getCarNames();
+      Validator.inputExists(carNamesInput);
       Validator.delimiter(carNamesInput);
 
       const carNames = parseCarNames(carNamesInput);

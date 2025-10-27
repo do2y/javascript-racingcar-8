@@ -2,6 +2,12 @@ import { ERROR_MESSAGES } from '../constants/error.js';
 import { CAR } from '../constants/constants.js';
 
 export const Validator = {
+  inputExists(input) {
+    if (!input || input.trim() === '') {
+      throw new Error(ERROR_MESSAGES.NO_CAR_NAME);
+    }
+  },
+
   delimiter(input) {
     if (/[^가-힣a-zA-Z0-9,\s]/.test(input))
       throw new Error(ERROR_MESSAGES.INVALID_DELIMITER);
