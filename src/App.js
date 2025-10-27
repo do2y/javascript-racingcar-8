@@ -17,7 +17,7 @@ class App {
       const roundCount = Validator.roundCount(roundCountInput);
 
       const game = new Game(carNames);
-      
+
       Printer.resultTitle();
       game.play(roundCount, Printer);
       Printer.winners(game.getWinners());

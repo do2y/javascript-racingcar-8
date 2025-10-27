@@ -5,7 +5,7 @@ export const Validator = {
   delimiter(input) {
     if (/[^가-힣a-zA-Z0-9,\s]/.test(input))
       throw new Error(ERROR_MESSAGES.INVALID_DELIMITER);
-    
+
     if (input.startsWith(',') || input.endsWith(','))
       throw new Error(ERROR_MESSAGES.INVALID_COMMA_POSITION);
   },
@@ -23,8 +23,15 @@ export const Validator = {
   roundCount(input) {
     if (input === '') throw new Error(ERROR_MESSAGES.EMPTY_ROUND_COUNT);
 
-    if (!/^\d+$/.test(input))
+    if (!/^\d+$/.test(input)) {
       throw new Error(ERROR_MESSAGES.INVALID_ROUND_COUNT);
-    return Number(input);
+    }
+
+    const number = Number(input);
+    if (number <= 0) {
+      throw new Error(ERROR_MESSAGES.INVALID_ROUND_COUNT);
+    }
+
+    return number;
   },
 };

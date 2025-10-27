@@ -7,5 +7,5 @@ export const ERROR_MESSAGES = {
   NO_CAR_NAME: '[ERROR] 자동차 이름이 입력되지 않았습니다.',
 
   EMPTY_ROUND_COUNT: '[ERROR] 시도 횟수가 입력되지 않았습니다.',
-  INVALID_ROUND_COUNT: '[ERROR] 시도 횟수는 0 이상의 정수만 가능합니다.',
+  INVALID_ROUND_COUNT: '[ERROR] 시도 횟수는 1 이상 정수만 가능합니다.',
 };
