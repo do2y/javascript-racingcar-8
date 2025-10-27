@@ -35,40 +35,6 @@ class App {
     return input.trim();
   }
 
-  validateRoundCount(input) {
-    if (input === '') {
-      throw new Error(ERROR_MESSAGES.EMPTY_ROUND_COUNT);
-    }
-
-    if (!/^\d+$/.test(input)) {
-      throw new Error(ERROR_MESSAGES.INVALID_ROUND_COUNT);
-    }
-
-    return Number(input);
-  }
-
-  playGame(carNames, roundCount) {
-    const carPositions = new Array(carNames.length).fill('');
-
-    for (let i = 0; i < roundCount; i++) {
-      carNames.forEach((name, index) => {
-        this.moveCar(carPositions, index);
-        Console.print(`${name} : ${carPositions[index]}`);
-      });
-
-      Console.print('');
-    }
-
-    return carPositions;
-  }
-
-  moveCar(carPositions, index) {
-    const randomValue = Random.pickNumberInRange(MIN_RANDOM, MAX_RANDOM);
-    if (randomValue >= MOVE_THRESHOLD) {
-      carPositions[index] += '-';
-    }
-  }
-
   printWinners(carNames, carPositions) {
     const maxDistance = Math.max(...carPositions.map((pos) => pos.length));
     const winners = carNames.filter(
