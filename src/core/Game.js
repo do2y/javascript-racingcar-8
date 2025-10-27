@@ -1,5 +1,5 @@
+import { Random } from '@woowacourse/mission-utils';
 import { RANDOM } from '../constants/constants.js';
-import { randomNumberInRange } from '../utils/random.js';
 
 export class Game {
   constructor(carNames) {
@@ -16,7 +16,7 @@ export class Game {
   }
 
   move(index) {
-    const randomValue = randomNumberInRange(RANDOM.MIN, RANDOM.MAX);
+    const randomValue = Random.pickNumberInRange(RANDOM.MIN, RANDOM.MAX);
     if (randomValue >= RANDOM.MOVE_THRESHOLD) {
       this.positions[index] += '-';
     }
