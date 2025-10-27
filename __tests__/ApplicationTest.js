@@ -127,3 +127,80 @@ describe('App 예외 테스트', () => {
     await expect(app.run()).rejects.toThrow(ERROR_MESSAGES.INVALID_ROUND_COUNT);
   });
 });
+
+describe('추가 기능 테스트', () => {
+  test('여러 우승자가 있는 경우 쉼표로 구분하여 출력', async () => {
+    const MOVING_FORWARD = 4;
+    const inputs = ['pobi,woni', '1'];
+    const logSpy = getLogSpy();
+
+    mockQuestions(inputs);
+    mockRandoms([MOVING_FORWARD, MOVING_FORWARD]);
+
+    const app = new App();
+    await app.run();
+
+    expect(logSpy).toHaveBeenCalledWith(
+      expect.stringContaining('최종 우승자 : pobi, woni'),
+    );
+  });
+
+  test('자동차 이름의 앞뒤 공백을 제거하여 처리', async () => {
+    const inputs = ['  pobi ,  woni  ', '1'];
+    const logSpy = getLogSpy();
+
+    mockQuestions(inputs);
+    mockRandoms([4, 3]);
+
+    const app = new App();
+    await app.run();
+
+    expect(logSpy).toHaveBeenCalledWith(expect.stringContaining('pobi : -'));
+    expect(logSpy).toHaveBeenCalledWith(expect.stringContaining('woni : '));
+  });
+
+  test('자동차가 한 대만 입력된 경우 정상 동작', async () => {
+    const inputs = ['pobi', '1'];
+    const logSpy = getLogSpy();
+
+    mockQuestions(inputs);
+    mockRandoms([4]);
+
+    const app = new App();
+    await app.run();
+
+    expect(logSpy).toHaveBeenCalledWith(expect.stringContaining('pobi : -'));
+    expect(logSpy).toHaveBeenCalledWith(
+      expect.stringContaining('최종 우승자 : pobi'),
+    );
+  });
+
+  test('시도 횟수가 여러 번인 경우 누적 전진의 올바른 출력', async () => {
+    const inputs = ['pobi,woni', '3'];
+    const logSpy = getLogSpy();
+
+    mockQuestions(inputs);
+    mockRandoms([4, 3, 4, 3, 4, 3]); // pobi만 매 라운드 전진
+
+    const app = new App();
+    await app.run();
+
+    expect(logSpy).toHaveBeenCalledWith(expect.stringContaining('pobi : ---'));
+  });
+
+  test('모든 랜덤값이 3 이하일 경우 전진 없이 정상 종료', async () => {
+    const inputs = ['pobi,woni', '2'];
+    const logSpy = getLogSpy();
+
+    mockQuestions(inputs);
+    mockRandoms([3, 2, 1, 0]);
+
+    const app = new App();
+    await app.run();
+
+    expect(logSpy).toHaveBeenCalledWith(expect.stringContaining('pobi :'));
+    expect(logSpy).toHaveBeenCalledWith(
+      expect.stringContaining('최종 우승자 : pobi, woni'),
+    );
+  });
+});
