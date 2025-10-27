@@ -1,27 +1,28 @@
 import { Console } from '@woowacourse/mission-utils';
+import { Validator } from './core/Validator.js';
+import { Game } from './core/Game.js';
 import { parseCarNames } from './utils/parser.js';
-import {
-  validateDelimiter,
-  validateCarNames,
-  validateRoundCount,
-} from './utils/validator.js';
-import { playGame } from './utils/game.js';
-import { printWinners } from './utils/printer.js';
+import { Printer } from './utils/printer.js';
 
 class App {
   async run() {
-    const carNamesInput = await this.getCarNames();
-    validateDelimiter(carNamesInput);
+    try {
+      const carNamesInput = await this.getCarNames();
+      Validator.delimiter(carNamesInput);
 
-    const carNames = parseCarNames(carNamesInput);
-    validateCarNames(carNames);
+      const carNames = parseCarNames(carNamesInput);
+      Validator.carNames(carNames);
 
-    const roundCount = await this.getRoundCount();
-    const validatedCount = validateRoundCount(roundCount);
+      const roundCountInput = await this.getRoundCount();
+      const roundCount = Validator.roundCount(roundCountInput);
 
-    Console.print('\n실행 결과');
-    const carPositions = playGame(carNames, validatedCount);
-    printWinners(carNames, carPositions);
+      const game = new Game(carNames);
+      Printer.resultTitle();
+      game.play(roundCount, Printer);
+      Printer.winners(game.getWinners());
+    } catch (error) {
+      Console.print(error.message);
+    }
   }
 
   async getCarNames() {
