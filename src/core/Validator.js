@@ -9,7 +9,7 @@ export const Validator = {
   },
 
   delimiter(input) {
-    if (/[^가-힣a-zA-Z0-9,\s]/.test(input))
+    if (/[^ㄱ-ㅎ가-힣ㅏ-ㅣa-zA-Z0-9,\s]/.test(input))
       throw new Error(ERROR_MESSAGES.INVALID_DELIMITER);
 
     if (input.startsWith(',') || input.endsWith(','))
