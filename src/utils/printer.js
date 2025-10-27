@@ -5,7 +5,7 @@ export const Printer = {
     Console.print('\n실행 결과');
   },
 
-  roundResult(carNames, positions) {
+  round(carNames, positions) {
     carNames.forEach((name, idx) =>
       Console.print(`${name} : ${positions[idx]}`),
     );
