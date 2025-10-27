@@ -22,6 +22,7 @@ class App {
       Printer.winners(game.getWinners());
     } catch (error) {
       Console.print(error.message);
+      throw error;
     }
   }
 
